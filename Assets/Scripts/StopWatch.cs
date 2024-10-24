@@ -15,7 +15,7 @@ public class StopWatch : MonoBehaviour
         if (isRunning)
             return;
         Restart();
-        print("Started");
+        // print("Started");
     }
 
     private void Restart()
@@ -27,7 +27,7 @@ public class StopWatch : MonoBehaviour
     private void StopTimer()
     {
         isRunning = false;
-        print("Stopped");
+        // print("Stopped");
     }
 
     void Update()
@@ -44,7 +44,7 @@ public class StopWatch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("Collision");
+        // print("Collision");
         if (other.CompareTag("Start"))
             StartTimer();
         else if (other.CompareTag("Finish"))
