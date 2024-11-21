@@ -2,13 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+
+enum FlickState
+{
+    Inactive,
+    Started,
+    Completed
+}
 
 public class StopWatch : MonoBehaviour
 {
     public Text display;
+    public GameObject canvas;
     private bool isRunning = false;
     private float elapsedTime = 0.0f;
+    public InputActionReference inputReference;
+    private InputAction inputAction;
+    private bool visible = true;
+    private FlickState wristFlick = FlickState.Inactive;
+    private float flickStartedTime;
+    private float flickEndedTime;
 
     private void StartTimer()
     {
@@ -30,8 +45,50 @@ public class StopWatch : MonoBehaviour
         // print("Stopped");
     }
 
+    private void Awake()
+    {
+        inputAction = inputReference.action;
+    }
+
+    static float WrapAngle(float angle)
+    {
+        angle %= 360;
+        angle = angle > 180 ? angle - 360 : angle;
+        return angle;
+    }
+
     void Update()
     {
+        Quaternion rotation = inputAction.ReadValue<Quaternion>();
+        float angle = WrapAngle(rotation.eulerAngles.z);
+        if (wristFlick == FlickState.Inactive && angle > 45.0f)
+        {
+            wristFlick = FlickState.Started;
+            flickStartedTime = Time.time;
+            // print("flick started");
+        }
+
+        if (wristFlick == FlickState.Started && angle < 0.0f)
+        {
+            wristFlick = FlickState.Completed;
+            flickEndedTime = Time.time;
+            // print("flick ended");
+        }
+
+        if (wristFlick == FlickState.Completed)
+        {
+            if (flickEndedTime - flickStartedTime < 1.0f)
+            {
+                visible = !visible;
+                canvas.SetActive(visible);
+                wristFlick = FlickState.Inactive;
+            } 
+            // print($"visible: {visible}");
+            // print(flickEndedTime - flickStartedTime);
+        }
+
+        // print(angle);
+
         if (isRunning)
             elapsedTime += Time.deltaTime;
 
