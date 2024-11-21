@@ -19,11 +19,13 @@ public class StopWatch : MonoBehaviour
     private bool isRunning = false;
     private float elapsedTime = 0.0f;
     public InputActionReference inputReference;
+    #region Flick
     private InputAction inputAction;
     private bool visible = true;
     private FlickState wristFlick = FlickState.Inactive;
     private float flickStartedTime;
     private float flickEndedTime;
+    #endregion
 
     private void StartTimer()
     {
@@ -82,7 +84,7 @@ public class StopWatch : MonoBehaviour
                 visible = !visible;
                 canvas.SetActive(visible);
                 wristFlick = FlickState.Inactive;
-            } 
+            }
             // print($"visible: {visible}");
             // print(flickEndedTime - flickStartedTime);
         }
