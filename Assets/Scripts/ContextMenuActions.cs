@@ -38,6 +38,8 @@ public class ContextMenuActions : MonoBehaviour
     public void PressMovementSpeedMinus()
     {
         float value = movementProvider.moveSpeed - movementSpeedStep;
+        if (value < 0)
+            return;
         movementProvider.moveSpeed = value;
         movementSpeedText.text = value.ToString();
     }
