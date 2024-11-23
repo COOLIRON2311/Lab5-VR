@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,33 +7,27 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class ContextMenu : MonoBehaviour
 {
-    /// <summary>
-    /// Teleportation
-    /// </summary>
-    public ActionBasedControllerManager controllerManager;
-    /// <summary>
-    /// Movement speed
-    /// </summary>
-    public DynamicMoveProvider moveProvider;
     public InputActionReference inputReference;
     public GameObject menu;
     public GameObject playerHead;
 
-    private InputAction grabAction;
+    private InputAction menuAction;
+    private bool visible;
 
     void Awake()
     {
-        menu.SetActive(false);
-        grabAction = inputReference.action;
+        visible = false;
+        menu.SetActive(visible);
+        menuAction = inputReference.action;
+
+        menuAction.performed += UpdateMenu;
     }
 
-    void Update()
+    private void UpdateMenu(InputAction.CallbackContext context)
     {
-        float value = grabAction.ReadValue<float>();
-        if (value == 0)
-            return;
+        visible = !visible;
         
-        menu.SetActive(true);
+        menu.SetActive(visible);
 
         // Position
         var forward = playerHead.transform.forward;
@@ -45,6 +40,10 @@ public class ContextMenu : MonoBehaviour
         var angles  = menu.transform.eulerAngles;
         angles.y = rotation_y;
         menu.transform.eulerAngles = angles;
+    }
 
+    void Update()
+    {  
+        
     }
 }

@@ -63,6 +63,10 @@ public class StopWatch : MonoBehaviour
     {
         Quaternion rotation = inputAction.ReadValue<Quaternion>();
         float angle = WrapAngle(rotation.eulerAngles.z);
+
+        if (angle > 90.0 || angle < -90.0)
+            return;
+
         if (wristFlick == FlickState.Inactive && angle > 45.0f)
         {
             wristFlick = FlickState.Started;
