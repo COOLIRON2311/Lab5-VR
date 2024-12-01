@@ -53,9 +53,9 @@ public class ContextMenuActions : MonoBehaviour
 
     public void PressExitGame()
     {
-        #if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
 #endif
-		Application.Quit();
+        Application.Quit();
     }
 }
