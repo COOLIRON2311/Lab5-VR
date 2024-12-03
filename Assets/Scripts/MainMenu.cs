@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 public class MainMenuActions : MonoBehaviour
 {
     public ContextMenu contextMenu;
+    public LevelManager levelManager;
+
     public void PressNewGame()
     {
-        SceneManager.LoadScene(1);
+        levelManager.LoadLevel(1);
     }
 
     public void PressSettings()

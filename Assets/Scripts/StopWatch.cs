@@ -26,6 +26,8 @@ public class StopWatch : MonoBehaviour
     private float flickStartedTime;
     private float flickEndedTime;
     #endregion
+    [SerializeField] LevelManager levelManager;
+    [SerializeField] float returnToMainMenuDelay = 5.0f;
 
     private void StartTimer()
     {
@@ -105,12 +107,21 @@ public class StopWatch : MonoBehaviour
         display.text = $"{span.Hours:d2}:{span.Minutes:d2}:{span.Seconds:d2}";
     }
 
+    private IEnumerator ReturnToMainMenu()
+    {
+        yield return new WaitForSeconds(returnToMainMenuDelay);
+        levelManager.LoadLevel(0);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // print("Collision");
         if (other.CompareTag("Start"))
             StartTimer();
         else if (other.CompareTag("Finish"))
+        {
             StopTimer();
+            StartCoroutine(ReturnToMainMenu());
+        }
     }
 }
