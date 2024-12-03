@@ -12,23 +12,25 @@ public class ContextMenu : MonoBehaviour
     private bool visible;
     static bool? smoothMotion;
     static float? movementSpeed;
-    
-    public GameObject playerHead;
+
+    [SerializeField] GameObject playerHead;
+    [SerializeField] LevelManager levelManager;
+
     #region Smooth Motion
     /// <summary>
     /// Teleportation
     /// </summary>
-    public ActionBasedControllerManager controllerManager;
-    public Text smoothMotionText;
+    [SerializeField] ActionBasedControllerManager controllerManager;
+    [SerializeField] Text smoothMotionText;
     #endregion
 
     #region Movement Speed
     /// <summary>
     /// Movement speed
     /// </summary>
-    public DynamicMoveProvider movementProvider;
-    public Text movementSpeedText;
-    public float movementSpeedStep;
+    [SerializeField] DynamicMoveProvider movementProvider;
+    [SerializeField] Text movementSpeedText;
+    [SerializeField] float movementSpeedStep;
     #endregion
 
     private void Awake()
@@ -38,7 +40,7 @@ public class ContextMenu : MonoBehaviour
         smoothMotion ??= controllerManager.smoothMotionEnabled;
         controllerManager.smoothMotionEnabled = smoothMotion.Value;
         smoothMotionText.text = smoothMotion.Value ? "Enabled" : "Disabled";
-        
+
         movementSpeed ??= movementProvider.moveSpeed;
         movementSpeedText.text = movementSpeed.Value.ToString();
         movementProvider.moveSpeed = movementSpeed.Value;
@@ -90,7 +92,7 @@ public class ContextMenu : MonoBehaviour
 
     public void PressToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        levelManager.LoadLevel(0);
     }
 
     public void PressCloseMenu()

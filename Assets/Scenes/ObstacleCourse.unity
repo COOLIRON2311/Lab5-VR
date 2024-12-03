@@ -4746,6 +4746,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 927306564}
     - target: {fileID: 7019356624447973641, guid: 4f9af1a411949ba4b9c56ab8b7645102, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 336990326}
+    - target: {fileID: 7019356624447973641, guid: 4f9af1a411949ba4b9c56ab8b7645102, type: 3}
       propertyPath: movementProvider
       value: 
       objectReference: {fileID: 1883357761}
